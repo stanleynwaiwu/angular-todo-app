@@ -44,8 +44,8 @@ export class PeopleListComponent {
   }
 
   deletePerson(person: any) {
-    console.log('Delete clicked:', person);
-  }
+  this.dataSource = this.dataSource.filter(p => p !== person);
+}
 
 
 }

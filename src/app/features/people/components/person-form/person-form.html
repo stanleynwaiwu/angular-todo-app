@@ -1,1 +1,27 @@
-<p>person-form works!</p>
+<h2>Add Person</h2>
+
+<form [formGroup]="form">
+
+  <div>
+    <label>Name</label>
+    <input type="text" formControlName="name" />
+  </div>
+
+  <div>
+    <label>Email</label>
+    <input type="email" formControlName="email" />
+  </div>
+
+  <div>
+    <label>Phone</label>
+    <input type="text" formControlName="phone" />
+  </div>
+
+  <div class="actions">
+    <button type="button" (click)="cancel()">Cancel</button>
+    <button type="button" (click)="submit()" [disabled]="form.invalid">
+      Save
+    </button>
+  </div>
+
+</form>
