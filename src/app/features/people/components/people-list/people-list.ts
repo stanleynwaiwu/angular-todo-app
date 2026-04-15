@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PersonFormComponent } from '../person-form/person-form';
 
 // Material Table Modules
 import { MatTableModule } from '@angular/material/table';
@@ -24,11 +25,27 @@ export class PeopleListComponent {
     { name: 'Peter Osaze', email: 'pita@gmail.com', phone: '0987654321' },
   ];
 
-  editPerson(person: any) {
-  console.log('Edit clicked:', person);
-}
+  constructor(private dialog: MatDialog) {}
 
-deletePerson(person: any) {
-  console.log('Delete clicked:', person);
-}
+  addPerson() {
+    const dialogRef = this.dialog.open(PersonFormComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataSource = [...this.dataSource, result];
+      }
+    });
+  }
+
+  editPerson(person: any) {
+    console.log('Edit clicked:', person);
+  }
+
+  deletePerson(person: any) {
+    console.log('Delete clicked:', person);
+  }
+
+
 }
