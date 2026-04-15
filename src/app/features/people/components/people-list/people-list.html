@@ -1,4 +1,3 @@
-<h2>People Management</h2>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -18,6 +17,23 @@
   <ng-container matColumnDef="phone">
     <th mat-header-cell *matHeaderCellDef> Phone </th>
     <td mat-cell *matCellDef="let person"> {{ person.phone }} </td>
+  </ng-container>
+
+  <!-- ⭐ ADD THIS: Actions Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+
+    <td mat-cell *matCellDef="let person">
+
+      <button mat-button (click)="editPerson(person)">
+        Edit
+      </button>
+
+      <button mat-button color="warn" (click)="deletePerson(person)">
+        Delete
+      </button>
+
+    </td>
   </ng-container>
 
   <!-- Header Row -->
