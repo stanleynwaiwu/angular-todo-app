@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { PeopleListComponent } from './features/people/components/people-list/people-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [PeopleListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

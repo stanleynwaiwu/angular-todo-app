@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-people-list',
+  standalone: true, // ✅ VERY IMPORTANT
   imports: [],
   templateUrl: './people-list.html',
-  styleUrl: './people-list.css',
+  styleUrls: ['./people-list.css'], // ✅ correct spelling
 })
-export class PeopleList {}
+export class PeopleListComponent {}
