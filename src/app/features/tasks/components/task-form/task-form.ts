@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
 
 import { Priority, Label } from '../../../../core/enums/enums';
 
@@ -34,10 +36,14 @@ labels = Object.values(Label);
 
   form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<TaskFormComponent>
-  ) {
+  
+ people: any[] = [];
+ constructor(
+  private fb: FormBuilder,
+  private dialogRef: MatDialogRef<TaskFormComponent>,
+  @Inject(MAT_DIALOG_DATA) public data: any
+) {
+ this.people = this.data.people;
 
     this.form = this.fb.group({
   title: ['', [Validators.required, Validators.minLength(3)]],
@@ -48,6 +54,7 @@ labels = Object.values(Label);
   startDate: [new Date()],
   completed: [false]
 });
+
 
   }
 

@@ -33,9 +33,12 @@ export class TaskListComponent {
 
   constructor(private dialog: MatDialog) {}
 
-  addTask() {
+addTask() {
   const dialogRef = this.dialog.open(TaskFormComponent, {
     width: '500px',
+    data: {
+      people: this.getPeople()
+    }
   });
 
   dialogRef.afterClosed().subscribe(result => {
@@ -46,6 +49,12 @@ export class TaskListComponent {
       ];
     }
   });
+}
+getPeople() {
+  return [
+    { name: 'Mikel Obi', email: 'mikel@gmail.com', phone: '1234567890' },
+    { name: 'Peter Osaze', email: 'pita@gmail.com', phone: '0987654321' },
+  ];
 }
   editTask(task: any) {
   console.log('Edit Task:', task);

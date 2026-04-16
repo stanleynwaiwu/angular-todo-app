@@ -34,11 +34,17 @@
     </mat-select>
   </mat-form-field>
 
-  <!-- PERSON (TEMP SIMPLE INPUT FOR NOW) -->
+  <!-- PERSON -->
   <mat-form-field appearance="outline" style="width: 100%">
-    <mat-label>Person Name</mat-label>
-    <input matInput formControlName="person" />
-  </mat-form-field>
+  <mat-label>Select Person</mat-label>
+
+  <mat-select formControlName="person">
+    <mat-option *ngFor="let p of people" [value]="p">
+      {{ p.name }}
+    </mat-option>
+  </mat-select>
+
+</mat-form-field>
 
   <!-- COMPLETED -->
   <mat-checkbox formControlName="completed">
