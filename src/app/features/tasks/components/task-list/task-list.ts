@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { TaskFormComponent } from '../task-form/task-form';
 
@@ -28,37 +29,29 @@ export class TaskListComponent {
     'actions'
   ];
 
-  dataSource: any[] = [ ]; 
+  dataSource = new MatTableDataSource<any>([]);
 
   constructor(private dialog: MatDialog) {}
 
   addTask() {
-    const dialogRef = this.dialog.open(TaskFormComponent, {
-      width: '400px'
-    });
+  const dialogRef = this.dialog.open(TaskFormComponent, {
+    width: '500px',
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataSource = [
-          ...this.dataSource,
-          {
-            ...result,
-            id: Date.now(),
-            completed: false,
-            person: { name: 'Unassigned', email: '', phone: '' },
-            priority: 'Medium',
-            labels: []
-          }
-        ];
-      }
-    });
-  }
-
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.dataSource.data = [
+        ...this.dataSource.data,
+        result
+      ];
+    }
+  });
+}
   editTask(task: any) {
   console.log('Edit Task:', task);
 }
 
-  deleteTask(task: any) {
-  this.dataSource = this.dataSource.filter(t => t !== task);
+ deleteTask(task: any) {
+  this.dataSource.data = this.dataSource.data.filter(t => t !== task);
 }
 }

@@ -1,1 +1,56 @@
-<p>task-form works!</p>
+<h2>Add Task</h2>
+
+<form [formGroup]="form">
+
+  <!-- TITLE -->
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+
+  <!-- DESCRIPTION -->
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <!-- PRIORITY -->
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Priority</mat-label>
+    <mat-select formControlName="priority">
+      <mat-option *ngFor="let p of priorities" [value]="p">
+        {{ p }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- LABELS -->
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Labels</mat-label>
+    <mat-select formControlName="labels" multiple>
+      <mat-option *ngFor="let l of labels" [value]="l">
+        {{ l }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- PERSON (TEMP SIMPLE INPUT FOR NOW) -->
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Person Name</mat-label>
+    <input matInput formControlName="person" />
+  </mat-form-field>
+
+  <!-- COMPLETED -->
+  <mat-checkbox formControlName="completed">
+    Completed
+  </mat-checkbox>
+
+  <!-- ACTIONS -->
+  <div style="margin-top: 15px; display: flex; gap: 10px;">
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
+      Save
+    </button>
+  </div>
+
+</form>
