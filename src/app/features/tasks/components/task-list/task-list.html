@@ -15,7 +15,7 @@
 
   <ng-container matColumnDef="person">
     <th mat-header-cell *matHeaderCellDef> Person </th>
-    <td mat-cell *matCellDef="let task">{{ task.person.name }}</td>
+    <td mat-cell *matCellDef="let task">{{ task.person?.name }}</td>
   </ng-container>
 
   <ng-container matColumnDef="priority">

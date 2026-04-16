@@ -5,6 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { TaskFormComponent } from '../task-form/task-form';
 
@@ -14,7 +15,8 @@ import { TaskFormComponent } from '../task-form/task-form';
   imports: [
     CommonModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
@@ -56,10 +58,35 @@ getPeople() {
     { name: 'Peter Osaze', email: 'pita@gmail.com', phone: '0987654321' },
   ];
 }
-  editTask(task: any) {
-  console.log('Edit Task:', task);
-}
 
+isEditMode = false;
+editingIndex: number | null = null;
+ editTask(task: any) {
+  const index = this.dataSource.data.findIndex(t => t === task);
+
+  const dialogRef = this.dialog.open(TaskFormComponent, {
+    width: '500px',
+    data: {
+      people: this.getPeople(),
+      task: task
+    }
+  });
+
+  this.isEditMode = true;
+  this.editingIndex = index;
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      const updated = [...this.dataSource.data];
+      updated[index] = result;
+
+      this.dataSource.data = updated;
+    }
+
+    this.isEditMode = false;
+    this.editingIndex = null;
+  });
+}
  deleteTask(task: any) {
   this.dataSource.data = this.dataSource.data.filter(t => t !== task);
 }

@@ -13,12 +13,13 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+
 import { Priority, Label } from '../../../../core/enums/enums';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [
+ imports: [
   CommonModule,
   ReactiveFormsModule,
   MatFormFieldModule,
@@ -45,21 +46,24 @@ labels = Object.values(Label);
   private dialogRef: MatDialogRef<TaskFormComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any
 ) {
- this.people = this.data.people;
- this.filteredPeople = this.people;
+  this.people = this.data.people;
+  this.filteredPeople = this.people;
 
-    this.form = this.fb.group({
-  title: ['', [Validators.required, Validators.minLength(3)]],
-  description: [''],
-  priority: [null, Validators.required],
-  labels: [[]],
-  person: [null, Validators.required],
-  startDate: [new Date()],
-  completed: [false]
-});
+  this.form = this.fb.group({
+    title: ['', [Validators.required]],
+    description: [''],
+    priority: [null, Validators.required],
+    labels: [[]],
+    person: [null, Validators.required],
+    startDate: [new Date()],
+    completed: [false]
+  });
 
-
+  // PREFILL IF EDIT MODE
+  if (this.data.task) {
+    this.form.patchValue(this.data.task);
   }
+}
 
   filterPeople(event: any) {
   const value = event.target.value.toLowerCase();
