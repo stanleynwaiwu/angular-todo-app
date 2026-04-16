@@ -16,7 +16,7 @@ import { Inject } from '@angular/core';
 export class PersonFormComponent {
   form: FormGroup;
 
-  constructor(
+ constructor(
   private fb: FormBuilder,
   private dialogRef: MatDialogRef<PersonFormComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any
@@ -27,10 +27,19 @@ export class PersonFormComponent {
     phone: ['', [Validators.required]],
   });
 
-  // PREFILL IF EDIT MODE
-  if (this.data) {
-    this.form.patchValue(this.data);
+  // Prefill for edit
+  if (this.data?.person) {
+    this.form.patchValue(this.data.person);
   }
+
+  // 🔥 Add unique validation
+  this.form.get('name')?.valueChanges.subscribe(value => {
+    const name = value?.trim().toLowerCase();
+
+    if (this.data?.existingNames?.includes(name)) {
+      this.form.get('name')?.setErrors({ notUnique: true });
+    }
+  });
 }
 
  submit() {

@@ -33,17 +33,14 @@ export class PeopleListComponent {
  addPerson() {
   const dialogRef = this.dialog.open(PersonFormComponent, {
     width: '400px',
+    data: {
+      existingNames: this.dataSource.data.map(p => p.name.toLowerCase())
+    }
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    console.log('DIALOG RESULT:', result); 
-
     if (result) {
-      
-        this.dataSource.data = [...this.dataSource.data, result];
-        console.log('UPDATED DATASOURCE:', this.dataSource); 
-     
-     
+      this.dataSource.data = [...this.dataSource.data, result];
     }
   });
 }
@@ -51,7 +48,12 @@ export class PeopleListComponent {
   editPerson(person: any) {
   const dialogRef = this.dialog.open(PersonFormComponent, {
     width: '400px',
-    data: person // 🔥 send data
+    data: {
+      person,
+      existingNames: this.dataSource.data
+        .filter(p => p !== person)
+        .map(p => p.name.toLowerCase())
+    }
   });
 
   dialogRef.afterClosed().subscribe(result => {
