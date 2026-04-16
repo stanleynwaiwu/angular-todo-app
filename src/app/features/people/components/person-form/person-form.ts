@@ -25,11 +25,14 @@ export class PersonFormComponent {
     });
   }
 
-  submit() {
-    if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
-    }
+ submit() {
+  console.log('FORM VALUE:', this.form.value);
+  console.log('FORM VALID:', this.form.valid);
+
+  if (this.form.valid) {
+    this.dialogRef.close(this.form.value);
   }
+}
 
   cancel() {
     this.dialogRef.close();
