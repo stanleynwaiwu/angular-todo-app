@@ -2,72 +2,73 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PersonFormComponent } from '../person-form/person-form';
 
-
-// Material Table Modules
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { DataService } from '../../../../core/services/data.service';
+
 @Component({
   selector: 'app-people-list',
-  standalone: true, 
-  imports: [ CommonModule,
-  MatTableModule,
-  MatDialogModule,
-  MatButtonModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatDialogModule,
+    MatButtonModule
+  ],
   templateUrl: './people-list.html',
-  styleUrls: ['./people-list.css'], 
+  styleUrls: ['./people-list.css'],
 })
 export class PeopleListComponent {
 
   displayedColumns: string[] = ['name', 'email', 'phone', 'actions'];
 
-  dataSource = new MatTableDataSource([
-  { name: 'Mikel Obi', email: 'mikel@gmail.com', phone: '1234567890' },
-  { name: 'Peter Osaze', email: 'pita@gmail.com', phone: '0987654321' },
-]);
+  dataSource = new MatTableDataSource<any>([]);
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private dataService: DataService
+  ) {}
 
- addPerson() {
-  const dialogRef = this.dialog.open(PersonFormComponent, {
-    width: '400px',
-    data: {
-      existingNames: this.dataSource.data.map(p => p.name.toLowerCase())
-    }
-  });
+  ngOnInit() {
+    this.loadPeople();
+  }
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      this.dataSource.data = [...this.dataSource.data, result];
-    }
-  });
-}
+  loadPeople() {
+    this.dataSource.data = this.dataService.getPeople();
+  }
+
+  addPerson() {
+    const dialogRef = this.dialog.open(PersonFormComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataService.addPerson(result);
+        this.loadPeople();
+      }
+    });
+  }
 
   editPerson(person: any) {
-  const dialogRef = this.dialog.open(PersonFormComponent, {
-    width: '400px',
-    data: {
-      person,
-      existingNames: this.dataSource.data
-        .filter(p => p !== person)
-        .map(p => p.name.toLowerCase())
-    }
-  });
+    const dialogRef = this.dialog.open(PersonFormComponent, {
+      width: '400px',
+      data: { person }
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      this.dataSource.data = this.dataSource.data.map(p =>
-        p === person ? result : p
-      );
-    }
-  });
-}
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataService.updatePerson(person, result);
+        this.loadPeople();
+      }
+    });
+  }
 
   deletePerson(person: any) {
-  this.dataSource.data = this.dataSource.data.filter(p => p !== person);
-}
-
-
+    this.dataService.deletePerson(person);
+    this.loadPeople();
+  }
 }
