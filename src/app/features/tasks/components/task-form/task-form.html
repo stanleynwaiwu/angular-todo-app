@@ -38,14 +38,14 @@
   <mat-form-field appearance="outline" style="width: 100%">
   <mat-label>Select Person</mat-label>
 
-  <mat-select formControlName="person">
-    <mat-option *ngFor="let p of people" [value]="p">
+  <input matInput (input)="filterPeople($event)" [matAutocomplete]="auto" formControlName="person">
+
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let p of filteredPeople" [value]="p">
       {{ p.name }}
     </mat-option>
-  </mat-select>
-
+  </mat-autocomplete>
 </mat-form-field>
-
   <!-- COMPLETED -->
   <mat-checkbox formControlName="completed">
     Completed

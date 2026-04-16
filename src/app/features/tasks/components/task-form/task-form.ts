@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { Priority, Label } from '../../../../core/enums/enums';
 
@@ -23,6 +24,7 @@ import { Priority, Label } from '../../../../core/enums/enums';
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
+  MatAutocompleteModule,
   MatButtonModule,
   MatCheckboxModule
 ],
@@ -36,7 +38,7 @@ labels = Object.values(Label);
 
   form: FormGroup;
 
-  
+  filteredPeople: any[] = [];
  people: any[] = [];
  constructor(
   private fb: FormBuilder,
@@ -44,6 +46,7 @@ labels = Object.values(Label);
   @Inject(MAT_DIALOG_DATA) public data: any
 ) {
  this.people = this.data.people;
+ this.filteredPeople = this.people;
 
     this.form = this.fb.group({
   title: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,6 +60,14 @@ labels = Object.values(Label);
 
 
   }
+
+  filterPeople(event: any) {
+  const value = event.target.value.toLowerCase();
+
+  this.filteredPeople = this.people.filter(p =>
+    p.name.toLowerCase().includes(value)
+  );
+}
 
   submit() {
     if (this.form.valid) {
