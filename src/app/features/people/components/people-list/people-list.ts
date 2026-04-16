@@ -49,8 +49,19 @@ export class PeopleListComponent {
 }
 
   editPerson(person: any) {
-    console.log('Edit clicked:', person);
-  }
+  const dialogRef = this.dialog.open(PersonFormComponent, {
+    width: '400px',
+    data: person // 🔥 send data
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.dataSource.data = this.dataSource.data.map(p =>
+        p === person ? result : p
+      );
+    }
+  });
+}
 
   deletePerson(person: any) {
   this.dataSource.data = this.dataSource.data.filter(p => p !== person);
