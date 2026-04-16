@@ -1,12 +1,22 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+
 import { TaskFormComponent } from '../task-form/task-form';
 
 @Component({
   selector: 'app-task-list',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatButtonModule
+  ],
   templateUrl: './task-list.html',
-  styleUrl: './task-list.css',
+  styleUrls: ['./task-list.css']
 })
 export class TaskListComponent {
 
@@ -43,4 +53,12 @@ export class TaskListComponent {
       }
     });
   }
+
+  editTask(task: any) {
+  console.log('Edit Task:', task);
+}
+
+  deleteTask(task: any) {
+  this.dataSource = this.dataSource.filter(t => t !== task);
+}
 }
