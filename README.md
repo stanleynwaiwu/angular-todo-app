@@ -1,59 +1,81 @@
-# AngularTodoApp
+#  Angular Task Management App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+##  Overview
+This is a Task Management application built with Angular using standalone components and Angular Material.
 
-## Development server
+It allows users to manage people and assign tasks with priorities, labels, and status tracking — all within a clean and responsive interface.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+###  People Management
+- Add, edit, and delete people
+- Form validation (required fields, unique names, email format)
 
-## Code scaffolding
+###  Task Management
+- Create, edit, and delete tasks
+- Assign tasks to people
+- Set priority (Easy, Medium, Hard)
+- Add labels to tasks
+- Mark tasks as completed
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+###  User Experience
+- Autocomplete for selecting people
+- Pagination for task list
+- Responsive UI with TailwindCSS
+- Clean and modern interface design
 
-```bash
-ng generate component component-name
-```
+###  Data Persistence
+- Tasks are saved using **localStorage**
+- Data remains even after page refresh
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+##  Tech Stack
 
-## Building
+- **Angular (Standalone Components)**
+- **Angular Material**
+- **TailwindCSS (CDN)**
+- **TypeScript**
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+##  Live Demo
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+ https://angular-todo-app-vert-beta.vercel.app
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+##  Project Structure
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+##  Key Design Decisions
 
-For end-to-end (e2e) testing, run:
+- Used **Standalone Components** for a modern Angular structure
+- Combined **Angular Material + TailwindCSS** for both functionality and styling flexibility
+- Implemented **localStorage** for quick persistence without backend setup
+- Added **pagination** to improve scalability and usability
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+##  Future Improvements
 
-## Additional Resources
+- Backend integration (Node.js / Express)
+- Authentication system
+- Advanced filtering and search
+- Drag-and-drop task management
+- Role-based user system
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+##  Author
+
+**Stanley Nwaiwu**
+
+---
+
+##  Notes
+
+This project was initially built as part of a technical assessment and later enhanced with improved UI/UX and additional features such as pagination and persistent storage.
