@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatTableModule } from '@angular/material/table';
@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 
 import { TaskFormComponent } from '../task-form/task-form';
 
@@ -16,15 +17,17 @@ import { TaskFormComponent } from '../task-form/task-form';
     CommonModule,
     MatTableModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ],
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })
-export class TaskListComponent {
+export class TaskListComponent implements AfterViewInit {
 
   displayedColumns: string[] = [
     'title',
+    'description', // ✅ added
     'person',
     'priority',
     'status',
@@ -33,15 +36,19 @@ export class TaskListComponent {
 
   dataSource = new MatTableDataSource<any>(this.loadTasks());
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(private dialog: MatDialog) {}
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   // LOAD TASKS
   loadTasks() {
     const saved = localStorage.getItem('tasks');
     return saved ? JSON.parse(saved) : [];
   }
-
 
   // SAVE TASKS
   saveTasks() {
@@ -50,7 +57,6 @@ export class TaskListComponent {
       JSON.stringify(this.dataSource.data)
     );
   }
-
 
   // ADD TASK
   addTask() {
@@ -72,7 +78,6 @@ export class TaskListComponent {
       }
     });
   }
-
 
   // EDIT TASK 
   editTask(task: any) {
@@ -101,7 +106,6 @@ export class TaskListComponent {
       }
     });
   }
-
 
   // DELETE TASK
   deleteTask(task: any) {
