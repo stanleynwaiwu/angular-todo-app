@@ -27,7 +27,7 @@ export class TaskListComponent implements AfterViewInit {
 
   displayedColumns: string[] = [
     'title',
-    'description', // ✅ added
+    'description',
     'person',
     'priority',
     'status',
@@ -52,10 +52,7 @@ export class TaskListComponent implements AfterViewInit {
 
   // SAVE TASKS
   saveTasks() {
-    localStorage.setItem(
-      'tasks',
-      JSON.stringify(this.dataSource.data)
-    );
+    localStorage.setItem('tasks', JSON.stringify(this.dataSource.data));
   }
 
   // ADD TASK
@@ -116,11 +113,15 @@ export class TaskListComponent implements AfterViewInit {
     this.saveTasks();
   }
 
-  // MOCK PEOPLE
+  // MOCK PEOPLE (now synced via localStorage fallback later in next step)
   getPeople() {
-    return [
-      { name: 'Mikel Obi', email: 'mikel@gmail.com', phone: '1234567890' },
-      { name: 'Peter Osaze', email: 'pita@gmail.com', phone: '0987654321' }
-    ];
+    const saved = localStorage.getItem('people');
+
+    return saved
+      ? JSON.parse(saved)
+      : [
+          { name: 'Mikel Obi', email: 'mikel@gmail.com', phone: '1234567890' },
+          { name: 'Peter Osaze', email: 'pita@gmail.com', phone: '0987654321' }
+        ];
   }
 }

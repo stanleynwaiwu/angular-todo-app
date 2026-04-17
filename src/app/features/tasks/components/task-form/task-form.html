@@ -45,23 +45,25 @@
     </mat-form-field>
 
     <!-- PERSON AUTOCOMPLETE -->
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Select Person</mat-label>
+   <mat-form-field appearance="outline" style="width: 100%">
+  <mat-label>Select Person</mat-label>
 
-      <input
-        matInput
-        formControlName="person"
-        [matAutocomplete]="auto"
-        (input)="filterPeople($event)"
-        placeholder="Search person..."
-      />
+  <input
+    matInput
+    [matAutocomplete]="auto"
+    (input)="filterPeople($event)"
+    [value]="form.get('person')?.value?.name"
+  />
 
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let p of filteredPeople" [value]="p">
-          {{ p.name }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+  <mat-autocomplete #auto="matAutocomplete"
+    (optionSelected)="selectPerson($event.option.value)">
+
+    <mat-option *ngFor="let p of filteredPeople" [value]="p">
+      {{ p.name }}
+    </mat-option>
+
+  </mat-autocomplete>
+</mat-form-field>
 
     <!-- COMPLETED -->
     <div class="flex items-center gap-2">

@@ -12,7 +12,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { Priority, Label } from '../../../../core/enums/enums';
-import { DataService } from '../../../../core/services/data.service';
 
 @Component({
   selector: 'app-task-form',
@@ -43,12 +42,10 @@ export class TaskFormComponent {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<TaskFormComponent>,
-    private dataService: DataService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
 
-    //  ALWAYS GET LATEST PEOPLE 
-    this.people = this.dataService.getPeople();
+    this.people = this.data.people || [];
     this.filteredPeople = this.people;
 
     this.form = this.fb.group({
@@ -61,13 +58,13 @@ export class TaskFormComponent {
       completed: [false]
     });
 
-    // EDIT MODE SUPPORT
-    if (this.data?.task) {
+    // EDIT MODE
+    if (this.data.task) {
       this.form.patchValue(this.data.task);
     }
   }
 
-  //  AUTOCOMPLETE FILTER
+  // FIXED FILTER
   filterPeople(event: any) {
     const value = event.target.value?.toLowerCase() || '';
 
@@ -76,14 +73,17 @@ export class TaskFormComponent {
     );
   }
 
-  //SAVE
+  // IMPORTANT FIX: PROPER SELECTION HANDLING
+  selectPerson(person: any) {
+    this.form.get('person')?.setValue(person);
+  }
+
   submit() {
     if (this.form.valid) {
       this.dialogRef.close(this.form.value);
     }
   }
 
-   //CANCEL
   cancel() {
     this.dialogRef.close();
   }

@@ -7,8 +7,6 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { DataService } from '../../../../core/services/data.service';
-
 @Component({
   selector: 'app-people-list',
   standalone: true,
@@ -25,30 +23,36 @@ export class PeopleListComponent {
 
   displayedColumns: string[] = ['name', 'email', 'phone', 'actions'];
 
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<any>(this.loadPeople());
 
-  constructor(
-    private dialog: MatDialog,
-    private dataService: DataService
-  ) {}
+  constructor(private dialog: MatDialog) {}
 
-  ngOnInit() {
-    this.loadPeople();
+  // LOAD PEOPLE
+  loadPeople() {
+    const saved = localStorage.getItem('people');
+    return saved ? JSON.parse(saved) : [
+      { name: 'Mikel Obi', email: 'mikel@gmail.com', phone: '1234567890' },
+      { name: 'Peter Osaze', email: 'pita@gmail.com', phone: '0987654321' }
+    ];
   }
 
-  loadPeople() {
-    this.dataSource.data = this.dataService.getPeople();
+  // SAVE PEOPLE
+  savePeople() {
+    localStorage.setItem('people', JSON.stringify(this.dataSource.data));
   }
 
   addPerson() {
     const dialogRef = this.dialog.open(PersonFormComponent, {
       width: '400px',
+      data: {
+        existingNames: this.dataSource.data.map(p => p.name.toLowerCase())
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataService.addPerson(result);
-        this.loadPeople();
+        this.dataSource.data = [...this.dataSource.data, result];
+        this.savePeople();
       }
     });
   }
@@ -56,19 +60,31 @@ export class PeopleListComponent {
   editPerson(person: any) {
     const dialogRef = this.dialog.open(PersonFormComponent, {
       width: '400px',
-      data: { person }
+      data: {
+        person,
+        existingNames: this.dataSource.data
+          .filter(p => p !== person)
+          .map(p => p.name.toLowerCase())
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataService.updatePerson(person, result);
-        this.loadPeople();
+        this.dataSource.data = this.dataSource.data.map(p =>
+          p === person ? result : p
+        );
+        this.savePeople();
       }
     });
   }
 
   deletePerson(person: any) {
-    this.dataService.deletePerson(person);
-    this.loadPeople();
+    this.dataSource.data = this.dataSource.data.filter(p => p !== person);
+    this.savePeople();
+
+    // IMPORTANT: remove their tasks too
+    const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const updatedTasks = tasks.filter((t: any) => t.person?.name !== person.name);
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   }
 }
