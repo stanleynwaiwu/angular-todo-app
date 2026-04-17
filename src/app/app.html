@@ -1,15 +1,35 @@
-<div style="padding: 20px">
+<div class="min-h-screen bg-gray-50 flex justify-center px-4 py-6">
 
-  <h1></h1>
+  <div class="w-full max-w-4xl">
 
-  <hr />
+    <!-- APP HEADER -->
+    <div class="mb-8 text-center">
+      <h1 class="text-3xl font-bold text-gray-800">
+        Task Management Dashboard
+      </h1>
+      <p class="text-gray-500 text-sm mt-2">
+        Manage people and tasks efficiently
+      </p>
+    </div>
 
-  <h2></h2>
-  <app-people-list></app-people-list>
+    <!-- PEOPLE SECTION -->
+    <div class="bg-white rounded-2xl shadow-sm p-5 mb-6">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">
+        People
+      </h2>
 
-  <hr />
+      <app-people-list></app-people-list>
+    </div>
 
-  <h2></h2>
-  <app-task-list></app-task-list>
+    <!-- TASK SECTION -->
+    <div class="bg-white rounded-2xl shadow-sm p-5">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">
+        Tasks
+      </h2>
+
+      <app-task-list></app-task-list>
+    </div>
+
+  </div>
 
 </div>

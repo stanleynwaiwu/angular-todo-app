@@ -1,62 +1,100 @@
-<h2>Add Task</h2>
-
-<form [formGroup]="form">
+<div class="p-5 w-full max-w-md">
 
   <!-- TITLE -->
-  <mat-form-field appearance="outline" style="width: 100%">
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="title" />
-  </mat-form-field>
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">
+    Add Task
+  </h2>
 
-  <!-- DESCRIPTION -->
-  <mat-form-field appearance="outline" style="width: 100%">
-    <mat-label>Description</mat-label>
-    <textarea matInput formControlName="description"></textarea>
-  </mat-form-field>
+  <form [formGroup]="form" class="space-y-4">
 
-  <!-- PRIORITY -->
-  <mat-form-field appearance="outline" style="width: 100%">
-    <mat-label>Priority</mat-label>
-    <mat-select formControlName="priority">
-      <mat-option *ngFor="let p of priorities" [value]="p">
-        {{ p }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- TITLE -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter task title" />
+    </mat-form-field>
 
-  <!-- LABELS -->
-  <mat-form-field appearance="outline" style="width: 100%">
-    <mat-label>Labels</mat-label>
-    <mat-select formControlName="labels" multiple>
-      <mat-option *ngFor="let l of labels" [value]="l">
-        {{ l }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- DESCRIPTION -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        rows="3"
+        formControlName="description"
+        placeholder="Describe the task"
+      ></textarea>
+    </mat-form-field>
 
-  <!-- PERSON -->
-  <mat-form-field appearance="outline" style="width: 100%">
-  <mat-label>Select Person</mat-label>
+    <!-- PRIORITY -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option *ngFor="let p of priorities" [value]="p">
+          {{ p }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <input matInput (input)="filterPeople($event)" [matAutocomplete]="auto" formControlName="person">
+    <!-- LABELS -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Labels</mat-label>
+      <mat-select formControlName="labels" multiple>
+        <mat-option *ngFor="let l of labels" [value]="l">
+          {{ l }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let p of filteredPeople" [value]="p">
-      {{ p.name }}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
-  <!-- COMPLETED -->
-  <mat-checkbox formControlName="completed">
-    Completed
-  </mat-checkbox>
+    <!-- PERSON AUTOCOMPLETE -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Select Person</mat-label>
 
-  <!-- ACTIONS -->
-  <div style="margin-top: 15px; display: flex; gap: 10px;">
-    <button mat-button type="button" (click)="cancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
-      Save
-    </button>
-  </div>
+      <input
+        matInput
+        formControlName="person"
+        [matAutocomplete]="auto"
+        (input)="filterPeople($event)"
+        placeholder="Search person..."
+      />
 
-</form>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let p of filteredPeople" [value]="p">
+          {{ p.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!-- COMPLETED -->
+    <div class="flex items-center gap-2">
+      <mat-checkbox formControlName="completed">
+        Mark as completed
+      </mat-checkbox>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="flex justify-end gap-3 pt-3">
+
+      <button
+        mat-button
+        type="button"
+        (click)="cancel()"
+        class="!px-4 !py-2 !rounded-lg !border !border-gray-300 !text-gray-600 hover:!bg-gray-100 transition"
+      >
+        Cancel
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="submit()"
+        [disabled]="form.invalid"
+        class="!px-4 !py-2 !rounded-lg !bg-blue-600 !text-white hover:!bg-blue-700 transition disabled:!opacity-50"
+      >
+        Save
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

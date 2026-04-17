@@ -1,54 +1,101 @@
-<h2>Add Person</h2>
+<div class="p-5 w-full max-w-md">
 
-<form [formGroup]="form">
+  <!-- TITLE -->
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">
+    Add Person
+  </h2>
 
-  <div>
-  <label>Name</label>
-  <input type="text" formControlName="name" />
+  <form [formGroup]="form" class="space-y-4">
 
-  <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
-    <small *ngIf="form.get('name')?.errors?.['required']">
-      Name is required
-    </small>
-    <small *ngIf="form.get('name')?.errors?.['minlength']">
-      Name must be at least 3 characters
-    </small>
-    <small *ngIf="form.get('name')?.errors?.['notUnique']">
-      Name must be unique
-    </small>
-  </div>
+    <!-- NAME -->
+    <div>
+      <label class="block text-sm font-medium text-gray-600 mb-1">
+        Name
+      </label>
+
+      <input
+        type="text"
+        formControlName="name"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+        placeholder="Enter full name"
+      />
+
+      <div class="mt-1 text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+        <div *ngIf="form.get('name')?.errors?.['required']">
+          Name is required
+        </div>
+        <div *ngIf="form.get('name')?.errors?.['minlength']">
+          Must be at least 3 characters
+        </div>
+        <div *ngIf="form.get('name')?.errors?.['notUnique']">
+          Name must be unique
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL -->
+    <div>
+      <label class="block text-sm font-medium text-gray-600 mb-1">
+        Email
+      </label>
+
+      <input
+        type="email"
+        formControlName="email"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+        placeholder="Enter email address"
+      />
+
+      <div class="mt-1 text-xs text-red-500" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+        <div *ngIf="form.get('email')?.errors?.['required']">
+          Email is required
+        </div>
+        <div *ngIf="form.get('email')?.errors?.['email']">
+          Invalid email format
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE -->
+    <div>
+      <label class="block text-sm font-medium text-gray-600 mb-1">
+        Phone
+      </label>
+
+      <input
+        type="text"
+        formControlName="phone"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+        placeholder="Enter phone number"
+      />
+
+      <div class="mt-1 text-xs text-red-500" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
+        Phone is required
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="flex justify-end gap-3 pt-3">
+
+      <button
+        type="button"
+        (click)="cancel()"
+        class="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        (click)="submit()"
+        [disabled]="form.invalid"
+        class="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Save
+      </button>
+
+    </div>
+
+  </form>
+
 </div>
-
- <div>
-  <label>Email</label>
-  <input type="email" formControlName="email" />
-
-  <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
-    <small *ngIf="form.get('email')?.errors?.['required']">
-      Email is required
-    </small>
-    <small *ngIf="form.get('email')?.errors?.['email']">
-      Invalid email format
-    </small>
-  </div>
-</div>
-
- <div>
-  <label>Phone</label>
-  <input type="text" formControlName="phone" />
-
-  <div *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
-    <small>
-      Phone is required
-    </small>
-  </div>
-</div>
-
-  <div class="actions">
-    <button type="button" (click)="cancel()">Cancel</button>
-    <button type="button" (click)="submit()" [disabled]="form.invalid">
-      Save
-    </button>
-  </div>
-
-</form>
