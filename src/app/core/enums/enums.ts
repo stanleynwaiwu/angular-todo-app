@@ -1,12 +1,12 @@
 export enum Priority {
-  EASY = 'Easy',
-  MEDIUM = 'Medium',
-  HARD = 'Hard'
+  Easy = 'Easy',
+  Medium = 'Medium',
+  Hard = 'Hard'
 }
 
 export enum Label {
   HTML = 'HTML',
   CSS = 'CSS',
-  NODE = 'NODE JS',
+  NODE_JS = 'NODE JS',
   JQUERY = 'JQUERY'
 }

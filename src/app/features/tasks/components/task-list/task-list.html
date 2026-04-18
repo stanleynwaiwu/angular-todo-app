@@ -73,6 +73,26 @@
       </td>
     </ng-container>
 
+     <!-- FAVOURITE -->
+     <ng-container matColumnDef="favourite">
+  <th mat-header-cell *matHeaderCellDef class="!bg-gray-100 !text-gray-600 !font-medium !px-4 !py-3">
+    Favourite
+  </th>
+
+  <td mat-cell *matCellDef="let task" class="!px-4 !py-3">
+
+    <span
+      class="px-2 py-1 text-xs rounded-full font-medium"
+      [ngClass]="task.favourite
+        ? 'bg-yellow-100 text-yellow-700'
+        : 'bg-gray-100 text-gray-500'"
+    >
+      {{ task.favourite === true ? ' Yes' : 'No' }}
+    </span>
+
+  </td>
+</ng-container>
+
     <!-- STATUS -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef class="!bg-gray-100 !text-gray-600 !font-medium !px-4 !py-3">

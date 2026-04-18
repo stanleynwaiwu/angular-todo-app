@@ -52,6 +52,7 @@ export class TaskFormComponent {
       title: ['', Validators.required],
       description: [''],
       priority: [null, Validators.required],
+      favourite: [false],
       labels: [[]],
       person: [null, Validators.required],
       startDate: [new Date()],

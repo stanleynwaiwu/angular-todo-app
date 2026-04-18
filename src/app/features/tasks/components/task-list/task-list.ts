@@ -30,6 +30,7 @@ export class TaskListComponent implements AfterViewInit {
     'description',
     'person',
     'priority',
+    'favourite',
     'status',
     'actions'
   ];
